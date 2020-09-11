@@ -52,7 +52,7 @@ namespace IdentityServer.Configuration
                         IdentityServer4.IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServer4.IdentityServerConstants.StandardScopes.Profile
                     },
-                    RedirectUris = { "http://localhost:5003/signin-oidc" }
+                    RedirectUris = { "https://localhost:5003/signin-oidc" }
                 }
             };
         }
