@@ -6,6 +6,15 @@ namespace IdentityServer.Configuration
 {
     public static class IdentityConfiguration
     {
+        public static IEnumerable<IdentityResource> GetIdentityResources()
+        {
+            return new List<IdentityResource>
+            {
+                new IdentityResources.OpenId(),
+                new IdentityResources.Profile()
+            };
+        }
+
         public static IEnumerable<ApiResource> GetApis()
         {
             return new List<ApiResource>
@@ -18,7 +27,8 @@ namespace IdentityServer.Configuration
         {
             return new List<ApiScope>
             {
-                new ApiScope("ApiOne")
+                new ApiScope("ApiOne"),
+                new ApiScope("ApiTwo"),
             };
         }
 
@@ -32,6 +42,17 @@ namespace IdentityServer.Configuration
                     ClientSecrets = { new Secret("client_secret".ToSha256()) },
                     AllowedGrantTypes = GrantTypes.ClientCredentials,
                     AllowedScopes = { "ApiOne" }
+                },
+                new Client
+                {
+                    ClientId = "client_id_mvc",
+                    ClientSecrets = { new Secret("client_secret_mvc".ToSha256()) },
+                    AllowedGrantTypes = GrantTypes.Code,
+                    AllowedScopes = { "ApiOne", "ApiTwo",
+                        IdentityServer4.IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServer4.IdentityServerConstants.StandardScopes.Profile
+                    },
+                    RedirectUris = { "http://localhost:5003/signin-oidc" }
                 }
             };
         }
