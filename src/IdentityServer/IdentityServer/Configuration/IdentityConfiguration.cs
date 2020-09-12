@@ -11,7 +11,12 @@ namespace IdentityServer.Configuration
             return new List<IdentityResource>
             {
                 new IdentityResources.OpenId(),
-                new IdentityResources.Profile()
+                new IdentityResources.Profile(),
+                new IdentityResource
+                {
+                    Name = "rc.scope",
+                    UserClaims = { "server.character" }
+                }
             };
         }
 
@@ -27,7 +32,7 @@ namespace IdentityServer.Configuration
         {
             return new List<ApiScope>
             {
-                new ApiScope("ApiOne"),
+                new ApiScope("ApiOne", new [] { "server.api.characater" }),
                 new ApiScope("ApiTwo"),
             };
         }
@@ -50,9 +55,13 @@ namespace IdentityServer.Configuration
                     AllowedGrantTypes = GrantTypes.Code,
                     AllowedScopes = { "ApiOne", "ApiTwo",
                         IdentityServer4.IdentityServerConstants.StandardScopes.OpenId,
-                        IdentityServer4.IdentityServerConstants.StandardScopes.Profile
+                        IdentityServer4.IdentityServerConstants.StandardScopes.Profile,
+                        "rc.scope"
                     },
-                    RedirectUris = { "https://localhost:5003/signin-oidc" }
+                    RedirectUris = { "https://localhost:5003/signin-oidc" },
+
+                    // puts all the claims in id token
+                    //AlwaysIncludeUserClaimsInIdToken = true,
                 }
             };
         }

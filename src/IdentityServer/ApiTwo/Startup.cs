@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 
 namespace ApiTwo
 {
@@ -23,6 +24,10 @@ namespace ApiTwo
                 {
                     opts.Authority = Configuration["Identity:AuthorityEndpoint"];
                     opts.Audience = Configuration["Identity:Audience"];
+                    opts.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateAudience = false
+                    };
                 });
 
             services.Configure<IdentityConfiguration>(Configuration.GetSection("Identity"));

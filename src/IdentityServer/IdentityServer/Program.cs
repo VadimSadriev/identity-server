@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -24,6 +25,8 @@ namespace IdentityServer
                 var user = new IdentityUser("Alice");
 
                 userManager.CreateAsync(user, "password").GetAwaiter().GetResult();
+                userManager.AddClaimAsync(user, new Claim("server.character", "ahri")).GetAwaiter().GetResult();
+                userManager.AddClaimAsync(user, new Claim("server.api.characater", "xayah")).GetAwaiter().GetResult();
             }
 
             host.Run();
