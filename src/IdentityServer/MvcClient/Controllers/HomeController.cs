@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -45,6 +46,33 @@ namespace MvcClient.Controllers
             var response = await apiClient.GetAsync("http://localhost:5001/api/secret");
             var secretData = await response.Content.ReadAsStringAsync();
             return secretData;
+        }
+
+        public async Task RefreshAccessToken()
+        {
+            var serverClient = _httpClientFactory.CreateClient();
+
+            var discoveryDocument = await serverClient.GetDiscoveryDocumentAsync("https://localhost:5000/");
+
+            var refreshToken = await HttpContext.GetTokenAsync("refresh_token");
+
+            var refreshTokenClient = _httpClientFactory.CreateClient();
+
+            var tokenResponse = await refreshTokenClient.RequestRefreshTokenAsync(new RefreshTokenRequest
+            {
+                RefreshToken = refreshToken,
+                Address = discoveryDocument.TokenEndpoint,
+                ClientId = "client_id_mvc",
+                ClientSecret = "client_secret_mvc"
+            });
+
+            var authInfo = await HttpContext.AuthenticateAsync("Cookie");
+
+            authInfo.Properties.UpdateTokenValue("access_token", tokenResponse.AccessToken);
+            authInfo.Properties.UpdateTokenValue("id_token", tokenResponse.IdentityToken);
+            authInfo.Properties.UpdateTokenValue("refresh_token", tokenResponse.RefreshToken);
+
+            await HttpContext.SignInAsync("Cookie", authInfo.Principal, authInfo.Properties);
         }
     }
 }

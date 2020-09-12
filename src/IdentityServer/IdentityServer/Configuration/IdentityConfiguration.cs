@@ -59,7 +59,7 @@ namespace IdentityServer.Configuration
                         "rc.scope"
                     },
                     RedirectUris = { "https://localhost:5003/signin-oidc" },
-
+                    AllowOfflineAccess = true
                     // puts all the claims in id token
                     //AlwaysIncludeUserClaimsInIdToken = true,
                 }

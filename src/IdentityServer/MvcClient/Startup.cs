@@ -44,6 +44,7 @@ namespace MvcClient
                     opts.Scope.Add("openid");
                     opts.Scope.Add("rc.scope");
                     opts.Scope.Add("ApiOne");
+                    opts.Scope.Add("offline_access");
                 });
 
             services.AddControllersWithViews();
