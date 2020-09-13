@@ -33,6 +33,7 @@ namespace MvcClient
                     opts.ClaimActions.DeleteClaim("arm");
                     opts.ClaimActions.DeleteClaim("s_hash");
                     opts.ClaimActions.MapUniqueJsonKey("mvc_client_character", "server.character");
+                    // maps external claim "name" into http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name
                     opts.ClaimActions.MapJsonKey("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name", "name");
 
                     // makes additional request  to get other user claims instead of
