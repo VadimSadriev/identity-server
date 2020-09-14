@@ -68,11 +68,15 @@ namespace IdentityServer.Configuration
                     ClientId = "client_id_js",
                     ClientSecrets = { new Secret("client_secret_js".ToSha256()) },
                     AllowedGrantTypes = GrantTypes.Implicit,
+                    AllowedCorsOrigins = { "https://localhost:5004" },
                     RedirectUris = { "https://localhost:5004/home/signin" },
                      AllowedScopes = {
                         "ApiOne",
-                        IdentityServer4.IdentityServerConstants.StandardScopes.OpenId
+                        IdentityServer4.IdentityServerConstants.StandardScopes.OpenId,
+                        "rc.scope",
+                        "ApiTwo"
                     },
+                    AccessTokenLifetime = 1,
                     AllowAccessTokensViaBrowser = true
                 }
             };

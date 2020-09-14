@@ -33,6 +33,13 @@ namespace ApiOne
                         ValidateAudience = false
                     };
                 });
+
+
+            services.AddCors(opts =>
+            {
+                opts.AddPolicy("AllowAll", x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            });
+
             services.AddControllers();
         }
 
@@ -43,6 +50,7 @@ namespace ApiOne
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCors("AllowAll");
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();

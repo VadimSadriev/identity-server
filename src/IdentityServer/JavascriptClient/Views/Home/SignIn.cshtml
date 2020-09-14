@@ -1,5 +1,14 @@
 ﻿<h1>Sign in page</h1>
 
-<button onclick="extractTokens()">Extract tokens</button>
+@*<script src="~/custom-impl/sign-in-callback.js"></script>*@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/oidc-client/1.10.1/oidc-client.min.js"></script>
 
-<script src="~/sign-in-callback.js"></script>
+<script>
+    const userManager = new Oidc.UserManager({ userStore: new Oidc.WebStorageStateStore({ store: window.localStorage }) });
+
+    userManager.signinCallback()
+        .then(res => {
+            console.log(res);
+           location.href = '/home/index';
+        })
+</script>
