@@ -1,17 +1,19 @@
 ﻿using IdentityServer.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace IdentityServer.Configuration
 {
     public static class IServiceCollectionExtensions
     {
-        public static IServiceCollection AddIdentity(this IServiceCollection services)
+        public static IServiceCollection AddIdentity(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<DataContext>(opts =>
             {
-                opts.UseInMemoryDatabase("Memory");
+                //opts.UseInMemoryDatabase("Memory");
+                opts.UseSqlite(configuration["Database:ConnectionString"]);
             });
 
             services.AddIdentity<IdentityUser, IdentityRole>(opts =>
