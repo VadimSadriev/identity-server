@@ -47,6 +47,13 @@ namespace IdentityServer
             //.AddInMemoryClients(IdentityConfiguration.GetClients())
             .AddDeveloperSigningCredential();
 
+            services.AddAuthentication()
+                .AddFacebook(opts =>
+                {
+                    opts.AppId = "???"; // your facebook apllication id
+                    opts.AppSecret = "???"; // your facebook application secret
+                });
+
             services.AddControllersWithViews();
         }
 
