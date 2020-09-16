@@ -25,48 +25,48 @@ namespace IdentityServer
 
             using (var scope = host.Services.CreateScope())
             {
-                var configContext = scope.ServiceProvider.GetRequiredService<ConfigurationDbContext>();
+               // var configContext = scope.ServiceProvider.GetRequiredService<ConfigurationDbContext>();
                 
-                scope.ServiceProvider.GetRequiredService<PersistedGrantDbContext>().Database.Migrate();
-                scope.ServiceProvider.GetRequiredService<DataContext>().Database.Migrate();
-                configContext.Database.Migrate();
+                //scope.ServiceProvider.GetRequiredService<PersistedGrantDbContext>().Database.Migrate();
+                //scope.ServiceProvider.GetRequiredService<DataContext>().Database.Migrate();
+                //configContext.Database.Migrate();
 
                 var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
 
                 var user = new IdentityUser("Alice");
 
                 userManager.CreateAsync(user, "password").GetAwaiter().GetResult();
-                userManager.AddClaimAsync(user, new Claim("server.character", "ahri")).GetAwaiter().GetResult();
-                userManager.AddClaimAsync(user, new Claim("server.api.characater", "xayah")).GetAwaiter().GetResult();
+                //userManager.AddClaimAsync(user, new Claim("server.character", "ahri")).GetAwaiter().GetResult();
+                //userManager.AddClaimAsync(user, new Claim("server.api.characater", "xayah")).GetAwaiter().GetResult();
 
-                // ---
+                //// ---
 
-                if (!configContext.Clients.Any())
-                {
-                    foreach (var client in IdentityConfiguration.GetClients())
-                    {
-                        configContext.Clients.Add(client.ToEntity());
-                    }
-                    configContext.SaveChanges();
-                }
+                //if (!configContext.Clients.Any())
+                //{
+                //    foreach (var client in IdentityConfiguration.GetClients())
+                //    {
+                //        configContext.Clients.Add(client.ToEntity());
+                //    }
+                //    configContext.SaveChanges();
+                //}
 
-                if (!configContext.IdentityResources.Any())
-                {
-                    foreach (var resource in IdentityConfiguration.GetIdentityResources())
-                    {
-                        configContext.IdentityResources.Add(resource.ToEntity());
-                    }
-                    configContext.SaveChanges();
-                }
+                //if (!configContext.IdentityResources.Any())
+                //{
+                //    foreach (var resource in IdentityConfiguration.GetIdentityResources())
+                //    {
+                //        configContext.IdentityResources.Add(resource.ToEntity());
+                //    }
+                //    configContext.SaveChanges();
+                //}
 
-                if (!configContext.ApiScopes.Any())
-                {
-                    foreach (var resource in IdentityConfiguration.GetScopes())
-                    {
-                        configContext.ApiScopes.Add(resource.ToEntity());
-                    }
-                    configContext.SaveChanges();
-                }
+                //if (!configContext.ApiScopes.Any())
+                //{
+                //    foreach (var resource in IdentityConfiguration.GetScopes())
+                //    {
+                //        configContext.ApiScopes.Add(resource.ToEntity());
+                //    }
+                //    configContext.SaveChanges();
+                //}
             }
 
             host.Run();

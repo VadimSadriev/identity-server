@@ -4,7 +4,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/oidc-client/1.10.1/oidc-client.min.js"></script>
 
 <script>
-    const userManager = new Oidc.UserManager({ userStore: new Oidc.WebStorageStateStore({ store: window.localStorage }) });
+    const userManager = new Oidc.UserManager(
+        {
+           userStore: new Oidc.WebStorageStateStore({ store: window.localStorage }),
+           response_mode: "query"
+        });
 
     userManager.signinCallback()
         .then(res => {

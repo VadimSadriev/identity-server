@@ -27,24 +27,22 @@ namespace IdentityServer
 
             var assembly = GetType().Assembly.GetName().Name;
 
-            var certificate = new X509Certificate2();
-
             services.AddIdentityServer()
                 .AddAspNetIdentity<IdentityUser>()
-                .AddConfigurationStore(opts =>
-                {
-                    opts.ConfigureDbContext = x => x.UseSqlite(Configuration["Database:ConnectionString"],
-                        sql => sql.MigrationsAssembly(assembly));
-                })
-                .AddOperationalStore(options =>
-                {
-                    options.ConfigureDbContext = x => x.UseSqlite(Configuration["Database:ConnectionString"],
-                        sql => sql.MigrationsAssembly(assembly));
-                })
-            //.AddInMemoryIdentityResources(IdentityConfiguration.GetIdentityResources())
-            //.AddInMemoryApiResources(IdentityConfiguration.GetApis())
-            //.AddInMemoryApiScopes(IdentityConfiguration.GetScopes())
-            //.AddInMemoryClients(IdentityConfiguration.GetClients())
+            //.AddConfigurationStore(opts =>
+            //{
+            //    opts.ConfigureDbContext = x => x.UseSqlite(Configuration["Database:ConnectionString"],
+            //        sql => sql.MigrationsAssembly(assembly));
+            //})
+            //.AddOperationalStore(options =>
+            //{
+            //    options.ConfigureDbContext = x => x.UseSqlite(Configuration["Database:ConnectionString"],
+            //        sql => sql.MigrationsAssembly(assembly));
+            //})
+            .AddInMemoryIdentityResources(IdentityConfiguration.GetIdentityResources())
+            .AddInMemoryApiResources(IdentityConfiguration.GetApis())
+            .AddInMemoryApiScopes(IdentityConfiguration.GetScopes())
+            .AddInMemoryClients(IdentityConfiguration.GetClients())
             .AddDeveloperSigningCredential();
 
             services.AddAuthentication()
