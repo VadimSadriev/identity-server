@@ -30,6 +30,7 @@ namespace IdentityServer.Configuration
             {
                 opts.Cookie.Name = "IdentityServer.Cookie";
                 opts.LoginPath = "/Auth/Login";
+                opts.LogoutPath = "/Auth/Logout";
             });
 
             return services;

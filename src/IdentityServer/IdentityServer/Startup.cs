@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
 namespace IdentityServer
@@ -25,6 +26,8 @@ namespace IdentityServer
             services.AddIdentity(Configuration);
 
             var assembly = GetType().Assembly.GetName().Name;
+
+            var certificate = new X509Certificate2();
 
             services.AddIdentityServer()
                 .AddAspNetIdentity<IdentityUser>()

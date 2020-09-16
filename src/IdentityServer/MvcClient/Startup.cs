@@ -28,6 +28,7 @@ namespace MvcClient
                     opts.ClientSecret = "client_secret_mvc";
                     opts.SaveTokens = true;
                     opts.ResponseType = "code";
+                    opts.SignedOutCallbackPath = "/home/index";
 
                     // configure cookie claim mapping
                     opts.ClaimActions.DeleteClaim("arm");

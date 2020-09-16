@@ -3,6 +3,7 @@
     authority: "https://localhost:5000",
     client_id: "client_id_js",
     response_type: "id_token token",
+    post_logout_redirect_uri: "https://localhost:5004/home/index",
     redirect_uri: "https://localhost:5004/home/signin",
     scope: "openid ApiOne rc.scope ApiTwo"
 }
@@ -12,6 +13,10 @@ const userManager = new Oidc.UserManager(config);
 const signIn = function () {
 
     userManager.signinRedirect();
+}
+
+const signOut = function () {
+    userManager.signoutRedirect();
 }
 
 userManager.getUser()

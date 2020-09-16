@@ -58,6 +58,7 @@ namespace IdentityServer.Configuration
                         IdentityServer4.IdentityServerConstants.StandardScopes.Profile,
                         "rc.scope"
                     },
+                    PostLogoutRedirectUris = { "https://localhost:5003/home/index" },
                     RedirectUris = { "https://localhost:5003/signin-oidc" },
                     AllowOfflineAccess = true
                     // puts all the claims in id token
@@ -69,6 +70,7 @@ namespace IdentityServer.Configuration
                     ClientSecrets = { new Secret("client_secret_js".ToSha256()) },
                     AllowedGrantTypes = GrantTypes.Implicit,
                     AllowedCorsOrigins = { "https://localhost:5004" },
+                    PostLogoutRedirectUris = { "https://localhost:5004/home/index" },
                     RedirectUris = { "https://localhost:5004/home/signin" },
                      AllowedScopes = {
                         "ApiOne",

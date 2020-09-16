@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using IdentityServer.Configuration;
+using IdentityServer.Data;
 using IdentityServer4.EntityFramework.DbContexts;
 using IdentityServer4.EntityFramework.Mappers;
 using Microsoft.AspNetCore.Hosting;
@@ -24,6 +25,12 @@ namespace IdentityServer
 
             using (var scope = host.Services.CreateScope())
             {
+                var configContext = scope.ServiceProvider.GetRequiredService<ConfigurationDbContext>();
+                
+                scope.ServiceProvider.GetRequiredService<PersistedGrantDbContext>().Database.Migrate();
+                scope.ServiceProvider.GetRequiredService<DataContext>().Database.Migrate();
+                configContext.Database.Migrate();
+
                 var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
 
                 var user = new IdentityUser("Alice");
@@ -33,11 +40,6 @@ namespace IdentityServer
                 userManager.AddClaimAsync(user, new Claim("server.api.characater", "xayah")).GetAwaiter().GetResult();
 
                 // ---
-                scope.ServiceProvider.GetRequiredService<PersistedGrantDbContext>().Database.Migrate();
-
-                var configContext = scope.ServiceProvider.GetRequiredService<ConfigurationDbContext>();
-
-                configContext.Database.Migrate();
 
                 if (!configContext.Clients.Any())
                 {
